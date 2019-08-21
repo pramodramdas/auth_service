@@ -34,10 +34,14 @@ func CreateUserTable() (bool, error) {
 }
 
 func Home(res http.ResponseWriter, req *http.Request) {
-	//from interface{} to struct
-	userObj := context.Get(req, "user").(models.User)
+	sessionData := context.Get(req, "user")
+	name := ""
+	if sessionData != nil {
+		//from interface{} to struct
+		name = sessionData.(models.User).Name
+	}
 
-	io.WriteString(res, fmt.Sprintf("welcome user %s", userObj.Name))
+	io.WriteString(res, fmt.Sprintf("welcome user %s", name))
 }
 
 func AddUser(res http.ResponseWriter, req *http.Request) {
