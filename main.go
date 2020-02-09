@@ -69,10 +69,10 @@ func authorizeToken(next http.Handler) http.Handler {
 }
 
 func main() {
-	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With"})
+	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "token"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
-	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
-
+	allowedMethods := handlers.AllowedMethods([]string{"OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE"})
+	
 	router := mux.NewRouter().StrictSlash(true)
 	tracer, reporter, err := zepkinMem.ZepkinInterface.RegisterZipkinTacer()
 	if err != nil {

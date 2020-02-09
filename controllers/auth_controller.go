@@ -112,7 +112,11 @@ func Login(res http.ResponseWriter, req *http.Request) {
 
 	if errObj.Err != nil {
 		if errObj.StatusCode > 0 {
-			res.WriteHeader(500)
+			if errObj.StatusCode == 401 {
+				res.WriteHeader(401)
+			} else {
+				res.WriteHeader(500)
+			}
 		}
 		utilMem.UtilInterface.SendErrorResponse(res, errObj.Err.Error())
 		return
